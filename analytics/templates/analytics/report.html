@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Отчет за {{ today|date:"d.m.Y" }}</h2>
+<p>Всего заказов: {{ total_orders }}</p>
+<p>Выручка: {{ revenue }} руб.</p>
+<table>
+  <tr>
+    <th>№ Заказа</th><th>Пользователь</th><th>Сумма</th><th>Статус</th>
+  </tr>
+  {% for order in orders_today %}
+    <tr>
+      <td>{{ order.pk }}</td>
+      <td>{{ order.user.username }}</td>
+      <td>{{ order.total }}</td>
+      <td>{{ order.get_status_display }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

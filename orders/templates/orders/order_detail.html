@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Детали заказа №{{ order.pk }}</h2>
+<p>Дата: {{ order.created_at|date:"d.m.Y H:i" }}</p>
+<p>Статус: {{ order.get_status_display }}</p>
+<p>Адрес: {{ order.address }}</p>
+<p>Телефон: {{ order.phone }}</p>
+<table>
+  <tr>
+    <th>Товар</th><th>Кол-во</th><th>Цена</th><th>Сумма</th>
+  </tr>
+  {% for item in order.items.all %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.subtotal }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<p>Итого: {{ order.total }} руб.</p>
+{% endblock %}

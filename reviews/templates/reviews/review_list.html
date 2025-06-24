@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Отзывы покупателей</h2>
+<ul>
+  {% for review in reviews %}
+    <li>
+      <b>{{ review.product.name }}</b> — Оценка: {{ review.rating }}/5<br>
+      {{ review.review }}<br>
+      <i>от {{ review.user.username }} ({{ review.created_at|date:"d.m.Y" }})</i>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

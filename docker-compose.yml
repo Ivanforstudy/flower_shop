@@ -1,0 +1,39 @@
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: flowershop
+      POSTGRES_USER: flowershop
+      POSTGRES_PASSWORD: flowershop
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: gunicorn flower_shop.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code
+      - ./media:/code/media
+      - ./static:/code/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  bot:
+    build: .
+    command: python telegram_bot/bot.py
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

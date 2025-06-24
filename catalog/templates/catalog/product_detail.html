@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ product.name }}</h2>
+<img src="{{ product.image.url }}" width="200">
+<p>Цена: {{ product.price }} руб.</p>
+<p>{{ product.description }}</p>
+<a href="{% url 'cart_add' product.pk %}">В корзину</a>
+{% endblock %}

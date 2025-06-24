@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Профиль пользователя</h2>
+<p>Имя пользователя: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Телефон: {{ user.phone }}</p>
+<p>Адрес: {{ user.address }}</p>
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}

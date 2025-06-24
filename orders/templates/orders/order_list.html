@@ -1,0 +1,16 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<h2>Мои заказы</h2>
+<ul>
+  {% for order in orders %}
+    <li>
+      Заказ №{{ order.pk }} от {{ order.created_at|date:"d.m.Y H:i" }}
+      — {{ order.get_status_display }}
+      — <a href="{% url 'order_detail' order.pk %}">Подробнее</a>
+      — <a href="{% url 'order_repeat' order.pk %}">Повторить</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

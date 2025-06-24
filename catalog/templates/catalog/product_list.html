@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Каталог цветов</h2>
+<ul>
+  {% for product in products %}
+    <li>
+      <img src="{{ product.image.url }}" width="100" alt="{{ product.name }}">
+      <a href="{% url 'product_detail' product.pk %}">{{ product.name }}</a>
+      - {{ product.price }} руб.
+      <a href="{% url 'cart_add' product.pk %}">Добавить в корзину</a>
+    </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'cart' %}">Корзина ({{ cart|length }})</a>
+{% endblock %}
