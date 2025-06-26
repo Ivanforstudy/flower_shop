@@ -4,7 +4,7 @@ from .forms import OrderCreateForm
 from catalog.models import Product
 from .models import Order, OrderItem
 from django.utils import timezone
-from datetime import datetime, time
+from datetime import time
 
 def check_working_hours():
     now = timezone.localtime()
@@ -49,26 +49,25 @@ def order_create(request):
                 )
             request.session['cart'] = {}
             return redirect('order_detail', pk=order.pk)
-        else:
-            form = OrderCreateForm(initial={'address': request.user.address, 'phone': request.user.phone})
-        return render(request, 'orders/order_create.html', {'form': form})
+    else:
+        form = OrderCreateForm(initial={'address': request.user.address, 'phone': request.user.phone})
+    return render(request, 'orders/order_create.html', {'form': form})
 
-        @login_required
-        def order_list(request):
-            orders = Order.objects.filter(user=request.user).order_by('-created_at')
-            return render(request, 'orders/order_list.html', {'orders': orders})
+@login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'orders/order_list.html', {'orders': orders})
 
-        @login_required
-        def order_detail(request, pk):
-            order = get_object_or_404(Order, pk=pk, user=request.user)
-            return render(request, 'orders/order_detail.html', {'order': order})
+@login_required
+def order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    return render(request, 'orders/order_detail.html', {'order': order})
 
-        @login_required
-        def order_repeat(request, pk):
-            order = get_object_or_404(Order, pk=pk, user=request.user)
-            cart = {}
-            for item in order.items.all():
-                cart[str(item.product.pk)] = item.quantity
-            request.session['cart'] = cart
-            return redirect('cart')
-
+@login_required
+def order_repeat(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    cart = {}
+    for item in order.items.all():
+        cart[str(item.product.pk)] = item.quantity
+    request.session['cart'] = cart
+    return redirect('cart')
