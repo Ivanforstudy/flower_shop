@@ -1,10 +1,7 @@
-
 import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'unsafe-default-key')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
@@ -17,6 +14,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'catalog.apps.CatalogConfig',
+    'orders',
+    'reviews',
     # Ваши приложения
 ]
 
@@ -30,7 +31,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'your_project.urls'
+ROOT_URLCONF = 'flower_shop.urls'
 
 TEMPLATES = [
     {
@@ -48,7 +49,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'your_project.wsgi.application'
+WSGI_APPLICATION = 'flower_shop.wsgi.application'
 
 DATABASES = {
     'default': {
